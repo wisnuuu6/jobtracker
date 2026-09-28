@@ -1,0 +1,35 @@
+services:
+  app:
+    container_name: job-tracker
+    build: .
+    ports:
+      - "3100:3100"
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: ${DATABASE_URL}
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    mem_limit: 256m
+
+  db:
+    image: postgres:18-alpine
+    container_name: job-tracker-db
+    environment:
+      POSTGRES_DB: jobtracker
+      POSTGRES_USER: jobtracker
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    mem_limit: 384m
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U jobtracker -d jobtracker"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    # PostgreSQL port is NOT exposed to host — only accessible via Docker network
+
+volumes:
+  postgres_data:

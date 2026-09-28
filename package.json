@@ -1,0 +1,24 @@
+{
+  "name": "job-tracker",
+  "version": "0.2.0",
+  "private": true,
+  "description": "Self-hosted job application tracker",
+  "scripts": {
+    "build": "pnpm --filter @job-tracker/* run build",
+    "dev": "pnpm --filter @job-tracker/web run dev",
+    "dev:api": "pnpm --filter @job-tracker/api run dev",
+    "test": "pnpm --filter @job-tracker/* run test",
+    "db:migrate": "pnpm --filter @job-tracker/api run db:migrate",
+    "db:push": "pnpm --filter @job-tracker/api run db:push",
+    "db:studio": "pnpm --filter @job-tracker/api run db:studio",
+    "lint": "pnpm --filter @job-tracker/* run lint",
+    "clean": "pnpm --filter @job-tracker/* run clean && rm -rf node_modules dist"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0"
+  },
+  "packageManager": "pnpm@9.15.0",
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
